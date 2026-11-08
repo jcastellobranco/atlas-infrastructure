@@ -1,0 +1,35 @@
+name: Deploy existing pinned ECS revision
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        description: Service to update
+        required: true
+        type: choice
+        options: [api, frontend, worker, agent, rag, evaluation]
+      task_definition_arn:
+        description: Reviewed task definition revision ARN
+        required: true
+        type: string
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Update service and await stability
+        env:
+          SERVICE: ${{ inputs.service }}
+          TASK_DEF: ${{ inputs.task_definition_arn }}
+          CLUSTER: ${{ vars.ECS_CLUSTER }}
+          PREFIX: ${{ vars.ECS_SERVICE_PREFIX }}
+        run: |
+          set -euo pipefail
+          aws ecs update-service --cluster "$CLUSTER" --service "${PREFIX}-${SERVICE}" --task-definition "$TASK_DEF"
+          aws ecs wait services-stable --cluster "$CLUSTER" --services "${PREFIX}-${SERVICE}"
