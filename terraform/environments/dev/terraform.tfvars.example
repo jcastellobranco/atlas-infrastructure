@@ -1,0 +1,15 @@
+aws_region = "us-east-1"
+environment = "dev"
+name = "atlas"
+vpc_cidr = "10.42.0.0/16"
+certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/REPLACE"
+db_instance_class = "db.t4g.micro"
+db_multi_az = false
+image_uris = {
+  api = "123456789012.dkr.ecr.us-east-1.amazonaws.com/atlas-api@sha256:REPLACE"
+  frontend = "123456789012.dkr.ecr.us-east-1.amazonaws.com/atlas-frontend@sha256:REPLACE"
+  worker = "123456789012.dkr.ecr.us-east-1.amazonaws.com/atlas-worker@sha256:REPLACE"
+  agent = "123456789012.dkr.ecr.us-east-1.amazonaws.com/atlas-agent@sha256:REPLACE"
+  rag = "123456789012.dkr.ecr.us-east-1.amazonaws.com/atlas-rag@sha256:REPLACE"
+  evaluation = "123456789012.dkr.ecr.us-east-1.amazonaws.com/atlas-evaluation@sha256:REPLACE"
+}
