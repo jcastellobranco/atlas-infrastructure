@@ -1,0 +1,27 @@
+# Overlay for the sibling ATLAS Compose stack. See docs/DEMO.md.
+# Run with ai-inference-platform/docker-compose.fullstack.yml as the FIRST -f file.
+services:
+  backend:
+    mem_limit: 512m
+    cpus: 0.5
+  worker:
+    mem_limit: 512m
+    cpus: 0.5
+  frontend:
+    mem_limit: 128m
+    cpus: 0.25
+  rag:
+    mem_limit: 768m
+    cpus: 0.75
+  evaluation:
+    mem_limit: 384m
+    cpus: 0.5
+  agent:
+    mem_limit: 768m
+    cpus: 0.75
+  db:
+    mem_limit: 512m
+    cpus: 0.5
+  rag-db:
+    mem_limit: 512m
+    cpus: 0.5
